@@ -1,0 +1,27 @@
+<% if request.persisted? %>
+  <% action_url = cat_rental_request_url(request) %>
+  <% submit_text = 'Edit Request' %>
+  <%= button_to 'Delete Request', cat_rental_request_url(request), method: :delete %>
+<% else %>
+  <% action_url = cat_rental_requests_url %>
+  <% submit_text = 'Create Request' %>
+<% end %>
+
+<form  action='<%= action_url %>' method="post">
+  <% if request.persisted? %>
+  <input type='hidden' name='_method' value='patch'>
+  <% end %>
+  <input type='date' name='cat_rental_request[start_date]' value='<%=request.start_date%>'>
+  <input type='date' name='cat_rental_request[end_date]' value='<%=request.end_date%>'>
+  <select name='cat_rental_request[status]'>
+    <% request.class::STATUSES.each do |status| %>
+      <option <%= request.status == status && 'selected' %> value='<%= status %>'><%= status %></option>
+    <% end %>
+  </select>
+  <select name='cat_rental_request[cat_id]'>
+    <% Cat.all.each do |cat| %>
+      <option <%= request.cat_id == cat.id && 'selected' %> value='<%= cat.id %>'><%= "#{cat.id} - #{cat.name}" %></option>
+    <% end %>
+  </select>
+  <input type='submit' value='<%= submit_text %>'/>
+</form>

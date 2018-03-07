@@ -1,0 +1,10 @@
+<%= link_to 'Create Cat', new_cat_url %>
+<br>
+<% @cats.each do |cat| %>
+  <ul>
+    <li><%= cat.name %></li>
+    <li><%= link_to 'Cat Details', cat_url(cat) %></li>
+    <li><%= link_to 'Edit Cat', edit_cat_url(cat) %></li>
+    <li><%= button_to 'Delete Cat', cat_url(cat), method: :delete %></li>
+  </ul>
+<% end %>

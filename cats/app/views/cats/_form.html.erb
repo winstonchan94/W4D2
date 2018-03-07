@@ -1,0 +1,28 @@
+<% if type == :edit %>
+  <% action_url = cat_url(cat) %>
+  <% submit_text = 'Edit Cat' %>
+  <%= button_to 'Delete Cat', cat_url(cat), method: :delete %>
+<% else %>
+  <% action_url = cats_url %>
+  <% submit_text = 'Create Cat' %>
+<% end %>
+
+<form  action='<%= action_url %>' method="post">
+  <% if type == :edit %>
+  <input type='hidden' name='_method' value='patch'>
+  <% end %>
+  <input type='date' name='cat[birth_date]' value='<%=cat.birth_date%>'>
+  <select name='cat[color]'>
+    <% cat.class::COLORS.each do |color| %>
+      <option <%= cat.color == color && 'selected' %> value='<%= color %>'><%= color %></option>
+    <% end %>
+  </select>
+  <input type='text' name='cat[name]' value='<%=cat.name%>'/>
+  <select name='cat[sex]'>
+    <% cat.class::SEXES.each do |sex| %>
+      <option <%= cat.sex == sex && 'selected' %> value='<%= sex %>'><%= sex %></option>
+    <% end %>
+  </select>
+  <textarea name='cat[description]'><%=cat.description%></textarea>
+  <input type='submit' value='<%= submit_text %>'/>
+</form>

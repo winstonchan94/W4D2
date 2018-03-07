@@ -1,0 +1,40 @@
+<%= link_to 'Back to Index', cats_url %>
+<%= link_to 'Request This Cat', new_cat_rental_request_url, cat_id: cat.id %>
+<table>
+  <tr>
+    <th>attribute</th>
+    <th>value</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td><%=cat.name%></td>
+  </tr>
+  <tr>
+    <td>color</td>
+    <td><%=cat.color%></td>
+  </tr>
+  <tr>
+    <td>age</td>
+    <td><%=cat.age%></td>
+  </tr>
+  <tr>
+    <td>birth date</td>
+    <td><%=cat.birth_date%></td>
+  </tr>
+  <tr>
+    <td>sex</td>
+    <td><%=cat.sex%></td>
+  </tr>
+</table>
+
+<% cat.rental_requests.order(:start_date).each do |request| %>
+  <%= render 'cat_rental_requests/request', request: request %>
+  <% if request.pending? %>
+    <%= link_to 'Approve Request', approve_cat_rental_request_url(request) %>
+    <%= link_to 'Deny Request', deny_cat_rental_request_url(request) %>
+  <% end %>
+  <%= link_to 'Edit Request', edit_cat_rental_request_url(request)%>
+<% end %>
+
+<%= link_to 'Edit Cat', edit_cat_url(cat) %>
+<%= button_to 'Delete Cat', cat_url(cat), method: :delete %>

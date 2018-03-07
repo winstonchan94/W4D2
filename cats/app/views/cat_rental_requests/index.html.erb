@@ -1,0 +1,4 @@
+<%= link_to 'Create New Request', new_cat_rental_request_url %>
+<% @cat_rental_requests.each do |request| %>
+  <%= render 'request', request: request %>
+<% end %>
